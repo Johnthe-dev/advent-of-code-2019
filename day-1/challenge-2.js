@@ -6,7 +6,12 @@ let modules = [0, 50962, 126857, 127476, 136169, 62054, 116866, 123235, 147126, 
 	143419, 60108, 84990, 91544, 75240, 92709, 134369, 140901, 59910, 63641, 54966, 104671, 71950, 60358, 127289, 147362,
 	70799, 82870, 108630, 53450, 106888, 129843, 53227, 58758, 137751];
 function fuelCost (mod1, mod2) {
-
-	return (mod1 + Math.floor((mod2/3)-2));
+	let fuelRequired = 0;
+	let additionalFuel = Math.floor((mod2/3)-2);
+	while (additionalFuel>0) {
+		fuelRequired = fuelRequired + additionalFuel;
+		additionalFuel = Math.floor((additionalFuel/3)-2);
+	}
+	return (mod1 + fuelRequired );
 }
-console.log(modules.reduce(fuelCost));
+console.log(modules.reduce(fuelCost,0));
