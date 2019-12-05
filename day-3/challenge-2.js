@@ -16,13 +16,13 @@ function chartPath(input) {
 	let targetX = 0;
 	let targetY = 0;
 	let steps = 0;
-	for (let x=0;x<input.length;x++) {
+	for(let x = 0; x < input.length; x++) {
 		let path = input[x];
 		let direction = path[0];
 		if(direction === "U") {
 			targetY = currentY + parseInt(path.slice(1));
 			for(let i = currentY; i < targetY; i++) {
-				pathTraveled[steps]=[];
+				pathTraveled[steps] = [];
 				pathTraveled[steps][0] = currentX;
 				pathTraveled[steps][1] = i;
 				steps = steps + 1;
@@ -31,7 +31,7 @@ function chartPath(input) {
 		} else if(direction === "D") {
 			targetY = currentY - parseInt(path.slice(1));
 			for(let i = currentY; i > targetY; i--) {
-				pathTraveled[steps]=[];
+				pathTraveled[steps] = [];
 				pathTraveled[steps][0] = currentX;
 				pathTraveled[steps][1] = i;
 				steps = steps + 1;
@@ -40,7 +40,7 @@ function chartPath(input) {
 		} else if(direction === "R") {
 			targetX = currentX + parseInt(path.slice(1));
 			for(let i = currentX; i < targetX; i++) {
-				pathTraveled[steps]=[];
+				pathTraveled[steps] = [];
 				pathTraveled[steps][0] = i;
 				pathTraveled[steps][1] = currentY;
 				steps = steps + 1;
@@ -49,7 +49,7 @@ function chartPath(input) {
 		} else if(direction === "L") {
 			targetX = currentX - parseInt(path.slice(1));
 			for(let i = currentX; i > targetX; i--) {
-				pathTraveled[steps]=[];
+				pathTraveled[steps] = [];
 				pathTraveled[steps][1] = currentY;
 				pathTraveled[steps][0] = i;
 				steps = steps + 1;
@@ -64,24 +64,24 @@ let firstPathRoute = (chartPath(firstPath));
 let secondPathRoute = chartPath(secondPath);
 possibles = [];
 let counter = 0;
-for (let int1 = 0; int1<firstPathRoute.length; int1++) {
-	for (let int2 = 0; int2<secondPathRoute.length; int2++) {
-		if(firstPathRoute[int1][0]===secondPathRoute[int2][0] && firstPathRoute[int1][1]===secondPathRoute[int2][1]) {
+for(let int1 = 0; int1 < firstPathRoute.length; int1++) {
+	for(let int2 = 0; int2 < secondPathRoute.length; int2++) {
+		if(firstPathRoute[int1][0] === secondPathRoute[int2][0] && firstPathRoute[int1][1] === secondPathRoute[int2][1]) {
 			let label = counter;
 			possibles[label] = firstPathRoute[int1];
-			possibles[label][2]=int1;
-			possibles[label][3]=int2;
-			counter = counter+1;
+			possibles[label][2] = int1;
+			possibles[label][3] = int2;
+			counter = counter + 1;
 		}
 	}
 }
 console.log(possibles);
-let lowest=100000000000000;
-for (let i = 0; i<possibles.length; i++) {
-	if((Math.abs(possibles[i][0])+Math.abs(possibles[i][1]))===0){
+let lowest = 100000000000000;
+for(let i = 0; i < possibles.length; i++) {
+	if((Math.abs(possibles[i][0]) + Math.abs(possibles[i][1])) === 0) {
 
-	} else if(Math.abs(possibles[i][2])+Math.abs(possibles[i][3])<lowest) {
-		lowest = Math.abs(possibles[i][2])+Math.abs(possibles[i][3]);
+	} else if(Math.abs(possibles[i][2]) + Math.abs(possibles[i][3]) < lowest) {
+		lowest = Math.abs(possibles[i][2]) + Math.abs(possibles[i][3]);
 	}
 }
 console.log(lowest);
