@@ -1,4 +1,4 @@
-//First challenge of the Advent of Code 2019.
+//First challenge of Day 4 of the Advent of Code 2019.
 //Problem may be found at https://adventofcode.com/2019/day/4
 //solution by John Johnson-Rodgers <john@johnthe.dev>
 
