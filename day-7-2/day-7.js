@@ -4,13 +4,13 @@ let bagRules = input.split('\n');
 
 const map = new Map();
 
-function containsShinyGold(color) {
+function containsBag(color) {
     if(color === 'shiny gold') return true;
     if(!map.has(color)) return false;
 
-    const bagsWithin = map.get(color);
-    for (const {color: bag} of bagsWithin) {
-        if(containsShinyGold(bag)) {
+    const bagsIn = map.get(color);
+    for (const {color: bag} of bagsIn) {
+        if(containsBag(bag)) {
             return true;
         }
     }
@@ -34,7 +34,7 @@ const colors = map.keys();
 let total = 0;
 
 for (const color of colors) {
-    if(containsShinyGold(color) && color !== 'shiny gold') {
+    if(containsBag(color) && color !== 'shiny gold') {
         total++;
     }
 }
@@ -46,9 +46,9 @@ console.log(total);
 function sumBags(topBag) {
     if(topBag.number === 0) return 0;
 
-    const bagsWithin = map.get(topBag.color);
+    const bagsIn = map.get(topBag.color);
     let sum = 1;
-    for (const bag of bagsWithin) {
+    for (const bag of bagsIn) {
         sum += bag.number * sumBags(bag);
     }
     return sum;
