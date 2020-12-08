@@ -1,6 +1,6 @@
 const fs = require('fs');
 let input = fs.readFileSync('./input', {encoding: 'utf8', flag: 'r'});
-let groups = input.split('\n\n');
+let groups = input.split('\r\n\r\n');
 let count = 0;
 const unique = (array)=> {
 	let arr = [];
@@ -12,22 +12,25 @@ const unique = (array)=> {
 	return arr;
 }
 const allSaidYes=(array)=>{
-	let groupMembers=array.split('\n');
-	let arr=groupMembers[0];
-	for(let i=0; i<groupMembers.length; i++){
-		for(let j=0; j<arr.length; j++)
-			if(!groupMembers[i].includes(arr[j])){
-				arr.remove(j);
+	let arraySplit = array.split('\r\n');
+	let answers = arraySplit[0].split('');
+	arraySplit.forEach(person=>{
+		for(let i = 0; i<arraySplit[0].split('').length; i++){
+			if (!person.split('').includes(arraySplit[0].split('')[i])){
+				answers = answers.filter(e=>e!==arraySplit[0].split('')[i]);
+				console.log(answers);
+				console.log(person);
 			}
-	}
-	return arr.length;
+		}
+	});
+	console.log(answers.length);
+	return answers;
 }
+
 let allAnswered = 0;
 for(let i=0; i<groups.length; i++){
 	let answers=unique(groups[i].split(''));
 	count=count+answers.length;
-	allAnswered+=allSaidYes(groups[i])
+	allAnswered+=allSaidYes(groups[i]).length
+	console.log(allAnswered);
 }
-console.log(count);
-
-console.log('second Solution= '+allAnswered);
