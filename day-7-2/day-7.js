@@ -2,31 +2,58 @@ const fs = require('fs');
 let input = fs.readFileSync('./input.txt', {encoding: 'utf8', flag: 'r'});
 let bagRules = input.split('\n');
 
-// for(let y = 0; y < 2000; y++) {
-//     for (let i = 0; i < bagRules.length; i++) {
-//         for (let j = 0; j < bags.length; j++) {
-//             if (bags[j].includes(bagRules[i])) {
-//                 if (!bags.includes(bagRules[i].split(' ')[0] + ' ' + bagRules[i].split(' ')[1])) {
-//                     bags.push(bagRules[i].split(' ')[0] + ' ' + bagRules[i].split(' ')[1]);
-//                     console.log(bagRules[i]);
-//                 }
-//             }
-//         }
-//     }
-//     bagRules.filter(e=>!bags.includes(e.split(' ')[0] + ' ' + e.split(' ')[1]));
-// }
-let bagMap=[];
-for(let j = 0; j<5; j++){
-    console.log(bagRules[j]);
-let bagRule=bagRules[j].split(' ');
-    let containedBags = [];
-for(let i = 0; i < bagRule.length; i++){
+const map = new Map();
 
-    if(!isNaN(parseInt(bagRule[i], 10))){
-        containedBags[bagRule[i+1]+' '+bagRule[i+2]]=bagRule[i];
+function containsShinyGold(color) {
+    if(color === 'shiny gold') return true;
+    if(!map.has(color)) return false;
+
+    const bagsWithin = map.get(color);
+    for (const {color: bag} of bagsWithin) {
+        if(containsShinyGold(bag)) {
+            return true;
+        }
     }
+    return false;
+}
 
+for (const line of bagRules) {
+    const [bag, bags] = line.split(' bags contain ');
+
+    bags.replace(/\./, '').split(', ').map(txt => {
+        const {groups} = /((?<number>\d+) )?(?<color>.*)/.exec(txt.replace(/ bags?/, ''));
+        if(!map.has(bag)) {
+            map.set(bag, []);
+        }
+        if(!groups.number) groups.number = 0;
+        map.set(bag, [...map.get(bag), groups]);
+    })
 }
-    bagMap[bagRule[0]+' '+bagRule[1]]=containedBags;
+
+const colors = map.keys();
+let total = 0;
+
+for (const color of colors) {
+    if(containsShinyGold(color) && color !== 'shiny gold') {
+        total++;
+    }
 }
-console.log(bagMap);
+
+console.log(total);
+
+// part 2
+
+function sumBags(topBag) {
+    if(topBag.number === 0) return 0;
+
+    const bagsWithin = map.get(topBag.color);
+    let sum = 1;
+    for (const bag of bagsWithin) {
+        sum += bag.number * sumBags(bag);
+    }
+    return sum;
+}
+
+console.log(sumBags({number: 1, color: 'shiny gold'})-1);
+
+// console.log(bagMap);
