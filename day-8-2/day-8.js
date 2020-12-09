@@ -11,33 +11,57 @@ steps.forEach(step=>{
 	parsedSteps.push({'type':type, 'direction':direction, 'quantity':parseInt(quantity, 10)})
 	}
 )
-let repeat=false;
-let stepsTaken=[];
-let i = 0;
-let acc = 0;
-while(repeat!==true){
-	switch(parsedSteps[i].type){
-		case 'j':
-			if(parsedSteps[i].direction==='+'){
-				i+=parsedSteps[i].quantity;
-			} else {
-				i-=parsedSteps[i].quantity;
+let j = 0;
+let final = false
+while (final !== true) {
+	let repeat=false;
+	let stepsTaken=[];
+	let i = 0;
+	let acc = 0;
+	while (repeat !== true) {
+		if (i === parsedSteps.length) {
+			final = true;
+			repeat=true;
+			console.log(acc);
+		} else {
+			stepsTaken.push(i);
+
+			switch (parsedSteps[i].type) {
+				case 'j':
+					if (i === j) {
+						i++;
+					} else if (parsedSteps[i].direction === '+') {
+						i += parsedSteps[i].quantity;
+					} else {
+						i -= parsedSteps[i].quantity;
+					}
+					break;
+				case 'a':
+					if (parsedSteps[i].direction === '+') {
+						acc = acc + parsedSteps[i].quantity;
+					} else {
+						acc -= parsedSteps[i].quantity;
+					}
+					i++;
+					break;
+				case 'n':
+					if (i === j) {
+						if (parsedSteps[i].direction === '+') {
+							i += parsedSteps[i].quantity;
+						} else {
+							i -= parsedSteps[i].quantity;
+						}
+					} else {
+						i++;
+					}
+					break;
+				default:
+					break;
 			}
-			break;
-		case 'a':
-			if(parsedSteps[i].direction==='+'){
-				acc=acc+parsedSteps[i].quantity;
-			} else {
-				acc-=parsedSteps[i].quantity;
+			if (stepsTaken.includes(i)) {
+				repeat = true;
 			}
-			i++;
-			break;
-		default:
-			i++;
-			break;
+		}
 	}
-	if(i>622){
-		repeat=true;
-	}
+	j++;
 }
-console.log(acc);
