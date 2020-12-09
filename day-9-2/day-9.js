@@ -18,9 +18,9 @@ while (broken!==true){
  }
  twentyFivePrev.push(lines[i]);
  twentyFivePrev.shift();
- console.log(twentyFivePrev);
  i++;
 }
+console.log('first Answer: '+parseInt(lines[i-1], 10));
 let breakpoint = parseInt(lines[i-1], 10);
 let summed = false;
 let start = 0;
@@ -36,15 +36,15 @@ while (!summed){
             } else if(sum===breakpoint){
                 let smallest = 1000000000000;
                 let largest = 0;
-                for(i=start; i>j; i++){
+                for(i=start; i<j; i++){
                     if(parseInt(lines[i], 10)<smallest){
                         smallest=parseInt(lines[i], 10);
                     }
                     if(parseInt(lines[i], 10)>largest){
                         largest = parseInt(lines[i], 10);
                     }
-                    console.log(smallest+' '+largest);
                 }
+                console.log('second answer: '+(smallest+largest));
                 summed=true;
             }
         }
