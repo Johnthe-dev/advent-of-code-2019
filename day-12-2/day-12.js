@@ -52,12 +52,7 @@ for (let i = 0; i < directions.length - 1; i++) {
     }
 }
 console.log('first answer x=' + x + 'y = ' + y + ' sum=' + (Math.abs(y) + Math.abs(x)));
-directions = 'F10\n' +
-    'N3\n' +
-    'F7\n' +
-    'L90\n' +
-    'F11'
-directions = directions.split('\n');
+
 let waypointX = 10;
 let waypointY = 1;
 let tempY = 0;
@@ -89,8 +84,8 @@ for (let i = 0; i < directions.length; i++) {
                     waypointX = -tempY;
                     break;
                 case 180:
-                    waypointY = -tempX;
-                    waypointX = -tempY;
+                    waypointY = -tempY;
+                    waypointX = -tempX;
                     break;
                 case 270:
                     waypointY = -tempX;
@@ -110,8 +105,8 @@ for (let i = 0; i < directions.length; i++) {
                     waypointX = tempY;
                     break;
                 case 180:
-                    waypointY = -tempX;
-                    waypointX = -tempY;
+                    waypointY = -tempY;
+                    waypointX = -tempX;
                     break;
                 case 270:
                     waypointY = tempX;
