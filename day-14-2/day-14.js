@@ -21,7 +21,7 @@ for(let i = 1; i<instructions.length;i++){
                 instructions[i].value[j] = mask[j];
             }
         }
-        values[instructions[i].address] = instructions[i].value;
+        values[instructions[i].address] = parseInt(instructions[i].value, 2);
     }
 }
-console.log(values);
+console.log(values.reduce((a, b) => a + b, 0));
